@@ -42,5 +42,28 @@ def test_informace_menu_content(page, load_motozem):
         expect(menu_item).to_have_text(item["text"])
 
 
+def test_prodejny_menu_is_visible_when_hover_over(page, load_motozem):
+    prodejny_button = page.get_by_role("banner").get_by_role("link", name="Prodejny")
+    prodejny_menu = page.locator("li").filter(has_text="Prodejny Dobrá Brno Čestlice").get_by_role("list")
+    prodejny_button.hover()
+    expect(prodejny_menu).to_be_visible()
 
+
+def test_prodejny_menu_content(page, load_motozem):
+    prodejny_button = page.get_by_role("banner").get_by_role("link", name="Prodejny")
+    prodejny_button.hover()
+
+    prodejny_items = [
+        {"selector": page.get_by_title("Dobrá"), "text": "Dobrá"},
+        {"selector": page.get_by_title("Brno"), "text": "Brno"},
+        {"selector": page.get_by_title("Čestlice"), "text": "Čestlice"},
+        {"selector": page.get_by_title("Senec"), "text": "Senec"},
+        {"selector": page.get_by_title("Plzeň"), "text": "Plzeň"},
+        {"selector": page.get_by_title("Košice"), "text": "Košice"},
+    ]
+
+    for item in prodejny_items:
+        menu_item = item["selector"]
+        expect(menu_item).to_be_visible()
+        expect(menu_item).to_have_text(item["text"])
 
