@@ -67,3 +67,23 @@ def test_prodejny_menu_content(page, load_motozem):
         expect(menu_item).to_be_visible()
         expect(menu_item).to_have_text(item["text"])
 
+
+def test_poradime_vam_menu_is_visible(page, load_motozem):
+    poradime_button = page.get_by_label("Máte dotaz?")
+    expect(poradime_button).to_be_visible()
+
+
+def test_poradime_vam_menu_content(page, load_motozem):
+    poradime_button = page.get_by_label("Máte dotaz?")
+    poradime_button.click()
+
+    poradime_menu = [
+        {"selector": page.get_by_label("Napsat dotaz"), "text": "Napsat dotaz"},
+        {"selector": page.get_by_role("complementary").get_by_role("link", name="+420 555 333 957"), "text": "+420 555 333 957"},
+    ]
+
+    for item in poradime_menu:
+        menu_item = item["selector"]
+        expect(menu_item).to_be_visible()
+        expect(menu_item).to_have_text(item["text"])
+
