@@ -87,3 +87,29 @@ def test_poradime_vam_menu_content(page, load_motozem):
         expect(menu_item).to_be_visible()
         expect(menu_item).to_have_text(item["text"])
 
+
+def test_state_flag_is_visible(page, load_motozem):
+    state_flag = page.get_by_role("link", name="Motozem.cz", exact=True)
+    expect(state_flag).to_be_visible()
+
+
+def test_state_flags_are_visible_when_hover_over(page, load_motozem):
+    state_flag = page.get_by_role("link", name="Motozem.cz", exact=True)
+    state_flag.hover()
+
+    flag_items = [
+        {"selector": page.get_by_role("link", name="Motozem.sk"), "aria_label": "Motozem.sk"},
+        {"selector": page.get_by_role("link", name="Motozem.hu"), "aria_label": "Motozem.hu"},
+        {"selector": page.get_by_role("link", name="Motozem.pl"), "aria_label": "Motozem.pl"},
+        {"selector": page.get_by_role("link", name="Motozem.at"), "aria_label": "Motozem.at"},
+        {"selector": page.get_by_role("link", name="Motozem.de"), "aria_label": "Motozem.de"},
+        {"selector": page.get_by_role("link", name="Motozem.ro"), "aria_label": "Motozem.ro"},
+        {"selector": page.get_by_role("link", name="Motozem.hr"), "aria_label": "Motozem.hr"},
+        {"selector": page.get_by_role("link", name="Motozem.si"), "aria_label": "Motozem.si"},
+    ]
+
+    for flag in flag_items:
+        menu_item = flag["selector"]
+        expect(menu_item).to_be_visible()
+        expect(menu_item).to_have_attribute("aria-label", flag["aria_label"])
+
