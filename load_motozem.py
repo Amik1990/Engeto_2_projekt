@@ -142,9 +142,31 @@ def test_prihlasit_registrovat_is_visible_when_hoover_over_muj_ucet(page, load_m
         expect(menu_item).to_have_text(item["text"])
 
 
+def test_prihlaseni_uzivatele_is_visible(page, load_motozem):
+    muj_ucet = page.get_by_role("link", name="Můj účet")
+    prihlaseni_uzivatele_text = page.get_by_role("heading", name="Přihlášení uživatele")
+
+    muj_ucet.hover()
+    prihlasit = page.get_by_label("Přihlásit")
+    prihlasit.click()
+    expect(prihlaseni_uzivatele_text).to_have_text("Přihlášení uživatele")
 
 
+@pytest.mark.parametrize("email, password", [
+    ("zubnicentrum@gmail.com", "zubnikaz5"),
+    ("espresso@seznam.cz", "lavazza"),
+    ("emailbezzavinace", "boeing"),
+])
+def test_invalid_login(page, load_motozem, email, password):
+    muj_ucet = page.get_by_role("link", name="Můj účet")
+    muj_ucet.hover()
+    prihlasit = page.get_by_label("Přihlásit")
+    prihlasit.click()
+    prihlasit_se = page.get_by_role("button", name="Přihlásit se")
+
+    page.get_by_label("Zadejte svou e-mailovou adresu *").fill(email)
+    page.get_by_label("Heslo *").fill(password)
+    prihlasit_se.click()
+    expect(page.get_by_text("Zřejmě jste zadali špatné jmé")).to_be_visible()
 
 
-    # page.get_by_label("Přihlásit")
-    # page.get_by_label("Registrovat", exact=True)
