@@ -79,7 +79,8 @@ def test_poradime_vam_menu_content(page, load_motozem):
 
     poradime_menu = [
         {"selector": page.get_by_label("Napsat dotaz"), "text": "Napsat dotaz"},
-        {"selector": page.get_by_role("complementary").get_by_role("link", name="+420 555 333 957"), "text": "+420 555 333 957"},
+        {"selector": page.get_by_role("complementary").get_by_role("link", name="+420 555 333 957"),
+         "text": "+420 555 333 957"},
     ]
 
     for item in poradime_menu:
@@ -113,3 +114,37 @@ def test_state_flags_are_visible_when_hover_over(page, load_motozem):
         expect(menu_item).to_be_visible()
         expect(menu_item).to_have_attribute("aria-label", flag["aria_label"])
 
+
+def test_muj_ucet_is_visible(page, load_motozem):
+    muj_ucet = page.get_by_role("link", name="Můj účet")
+    expect(muj_ucet).to_be_visible()
+
+
+def test_muj_ucet_menu_is_visible_when_hoover_over_muj_ucet(page, load_motozem):
+    muj_ucet = page.get_by_role("link", name="Můj účet")
+    muj_ucet_menu = page.get_by_text("Přihlásit Registrovat")
+    muj_ucet.hover()
+    expect(muj_ucet_menu).to_be_visible()
+
+
+def test_prihlasit_registrovat_is_visible_when_hoover_over_muj_ucet(page, load_motozem):
+    muj_ucet = page.get_by_role("link", name="Můj účet")
+    muj_ucet.hover()
+
+    muj_ucet_content = [
+        {"selector": page.get_by_label("Přihlásit"), "text": "Přihlásit"},
+        {"selector": page.get_by_label("Registrovat", exact=True), "text": "Registrovat"},
+]
+
+    for item in muj_ucet_content:
+        menu_item = item["selector"]
+        expect(menu_item).to_be_visible()
+        expect(menu_item).to_have_text(item["text"])
+
+
+
+
+
+
+    # page.get_by_label("Přihlásit")
+    # page.get_by_label("Registrovat", exact=True)
