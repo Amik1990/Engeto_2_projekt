@@ -175,23 +175,17 @@ def test_add_to_shopping_cart(page, load_motozem):
     page.get_by_role("banner").get_by_role("textbox").fill("revit tornado 3")
     revit_tornado = page.get_by_role("link", name="Výprodej -2 062 Kč Bunda na motorku Revit Tornado 3 černá výprodej 6 187 Kč 8")
     lupa = page.get_by_role("button", name="Hledat")
+    medium_size = page.locator("label:nth-child(2)").first
+    koupit_button = page.get_by_role("button", name="Koupit")
+    pocet_v_kosiku = page.locator("a").filter(has_text=re.compile(r"^2$"))
+
     lupa.click()
     expect(revit_tornado).to_be_visible()
     revit_tornado.click()
-    medium_size = page.locator("label:nth-child(2)").first
     medium_size.click()
-    koupit_button = page.get_by_role("button", name="Koupit")
     koupit_button.click()
-    pocet_v_kosiku = page.locator("a").filter(has_text=re.compile(r"^2$"))
     expect(pocet_v_kosiku).to_have_text("2")
 
 
 
 
-
-    # page.get_by_role("button", name="Hledat").click()
-    # page.get_by_role("link", name="Výprodej -2 062 Kč Bunda na motorku Revit Tornado 3 černá výprodej 6 187 Kč 8").click()
-    # page.locator("label:nth-child(2)").first.click()
-    # page.get_by_text("187 Kč").click()
-    # page.get_by_role("button", name="Koupit").click()
-    # page.locator("a").filter(has_text="187 Kč").click()
