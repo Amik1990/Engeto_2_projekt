@@ -187,5 +187,31 @@ def test_add_to_shopping_cart(page, load_motozem):
     expect(pocet_v_kosiku).to_have_text("2")
 
 
+def test_change_amount_in_shopping_cart(page, load_motozem, add_to_shopping_cart):
+    do_kosiku_button = page.get_by_role("link", name="Do košíku")
+    pocet_v_kosiku = page.locator("a").filter(has_text=re.compile(r"^2$"))
+    pocet_v_kosiku_tri = page.locator("a").filter(has_text=re.compile(r"^3$"))
+    pocet_v_kosiku_ctyri = page.locator("a").filter(has_text=re.compile(r"^4$"))
+    pridat = page.locator("button[name=\"add\"]")
+    odebrat = page.locator("button[name=\"sub\"]")
+
+    do_kosiku_button.click()
+    pridat.click()
+    expect(pocet_v_kosiku_tri).to_have_text("3")
+    pridat.click()
+    expect(pocet_v_kosiku_ctyri).to_have_text("4")
+    odebrat.click()
+    expect(pocet_v_kosiku_tri).to_have_text("3")
+    odebrat.click()
+    expect(pocet_v_kosiku).to_have_text("2")
+
+
+
+
+
+
+
+
+
 
 
