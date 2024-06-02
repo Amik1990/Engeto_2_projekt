@@ -1,6 +1,7 @@
 from typing import Dict
 import pytest
-from playwright.sync_api import BrowserType, sync_playwright, Page
+import re
+from playwright.sync_api import BrowserType, sync_playwright, Page, expect
 
 
 @pytest.fixture()
@@ -8,6 +9,23 @@ def load_motozem(page: Page):    # načtění stránky motozem
     page.goto("https://www.motozem.cz/")
     accept_cookies = page.get_by_role("link", name="OK", exact=True)
     accept_cookies.click()
+
+
+@pytest.fixture()
+def add_to_shopping_cart(page, load_motozem):
+    page.get_by_role("banner").get_by_role("textbox").fill("revit tornado 3")
+    revit_tornado = page.get_by_role("link", name="Výprodej -2 062 Kč Bunda na motorku Revit Tornado 3 černá výprodej 6 187 Kč 8")
+    lupa = page.get_by_role("button", name="Hledat")
+    medium_size = page.locator("label:nth-child(2)").first
+    koupit_button = page.get_by_role("button", name="Koupit")
+    pocet_v_kosiku = page.locator("a").filter(has_text=re.compile(r"^2$"))
+
+    lupa.click()
+    expect(revit_tornado).to_be_visible()
+    revit_tornado.click()
+    medium_size.click()
+    koupit_button.click()
+    expect(pocet_v_kosiku).to_have_text("2")
 
 #Vytvořili jsme conftest.py s funkci viz níže, aby se ignorovaly případné chyby https během testování
 #@pytest.fixture(scope="session")
