@@ -226,15 +226,6 @@ def test_lokace_dobra_google_maps_open(page, load_motozem):
 
 
 
-  # page.get_by_role("link", name="Dobrá", exact=True).click()
-  #   page.get_by_role("link", name="OK", exact=True).click()
-  #   page.get_by_role("heading", name="Motoshop Dobrá").click()
-  #   with page.expect_popup() as page1_info:
-  #       page.get_by_role("link", name="Ukázat na mapě").click()
-  #   page1 = page1_info.value
-  #   page1.get_by_role("button", name="Přijmout vše").click()
-  #   page1.goto("https://www.google.com/maps/place/MotoZem+-+Dobr%C3%A1/@49.673611,18.416443,16z/data=!4m6!3m5!1s0x4713fbf0bd5b60c1:0x5a9cd24291dd86f0!8m2!3d49.6736114!4d18.4164425!16s%2Fg%2F1vd3tjb4?hl=cs&entry=ttu")
-  #   page1.get_by_role("heading", name="MotoZem - Dobrá", exact=True).click()
 
 
 
