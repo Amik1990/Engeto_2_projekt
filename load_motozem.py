@@ -220,7 +220,9 @@ def test_lokace_dobra_google_maps_open(page, load_motozem):
         page.get_by_role("link", name="Ukázat na mapě").click()
     page1 = page1_info.value
     page1.get_by_role("button", name="Přijmout vše").click()
-    expect(page1.get_by_role("heading", name="MotoZem - Dobrá", exact=True)).to_be_visible()
+
+    google_maps_dobra = page1.get_by_role("heading", name="MotoZem - Dobrá", exact=True)
+    expect(google_maps_dobra).to_be_visible()
 
 
 
