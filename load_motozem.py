@@ -161,12 +161,12 @@ def test_prihlaseni_uzivatele_is_visible(page, load_motozem):
 def test_invalid_login(page, load_motozem, email, password):
     muj_ucet = page.get_by_role("link", name="Můj účet")
     muj_ucet.hover()
-    prihlasit = page.get_by_label("Přihlásit")
+    prihlasit = page.get_by_role("link", name="Přihlásit")
     prihlasit.click()
     prihlasit_se = page.get_by_role("button", name="Přihlásit se")
 
-    page.get_by_label("Zadejte svou e-mailovou adresu *").fill(email)
-    page.get_by_label("Heslo *").fill(password)
+    page.locator("section").filter(has_text="Přihlášení uživatele pomocí e").locator("#sUserLogin").fill(email)
+    page.locator("section").filter(has_text="Přihlášení uživatele pomocí e").locator("#sUserPassword").fill(password)
     prihlasit_se.click()
     expect(page.get_by_text("Zřejmě jste zadali špatné jmé")).to_be_visible()
 
